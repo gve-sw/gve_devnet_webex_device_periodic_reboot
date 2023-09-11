@@ -1,6 +1,6 @@
 # Periodic Reboot for Webex Devices
 
-This macro schedules a weekly reboot of a device at a specified day and time each week.
+This macro schedules a weekly reboot of a device at a specified day and time each week or a daily reboot at a specified time.
 
 The primary xAPI Command used is: [Reboot](https://roomos.cisco.com/xapi/Command.SystemUnit.Boot)
 
@@ -26,10 +26,14 @@ Ensure the `AutoStart` and `Mode` Macro Configuration Settings are both set to o
 2. Before activating the macro, set the following constants in the code on your device. 
 * `RebootTime`: represents the time in HH:MM (24-hour format) to reboot the device
 * `RebootDay`: represents the day of the week to reboot the device. Please use the corresponding number mapped to the day of the week.
+* `force_flag`: if true, the device will reboot regardless if it's in use (on a call) or not. If false, the device reboots only if it's in idle, standby, or halfwake mode
+* `daily`: if true, the device reboots at the specified time daily (ignoring RebootDay)
 ```
-// By default, reboot every Sunday at 10:00 AM
+// By default, reboot every Sunday at 10:00 AM (force = False)
 const RebootTime = "10:00" // time to reboot (24 h)
 const RebootDay = "0" // Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6
+const force_flag = false // set to true, forces reboot even if device is actively being used, false only reboots when device is available (standby, or not in use)
+const daily = false // set to true for daily reboots (RebootDay is ignored, but RebootTime is considered)
 ```
 3. Activate the macro
 
